@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Header from "../components/Header";
 
 export default function Home() {
   return (
     <main>
-      <h1>Luma</h1>
+      <Header />
       <p>Your personal assistant.</p>
     </main>
   );
