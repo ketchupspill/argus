@@ -1,5 +1,5 @@
 export type Priority = 1 | 2 | 3;
-export type Status = "to-do" | "in-progress" | "completed";
+export type Status = "to_do" | "in_progress" | "completed";
 
 export interface Task {
   id: string;
