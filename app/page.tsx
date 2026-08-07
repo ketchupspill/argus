@@ -2,7 +2,7 @@ import Image from "next/image";
 import Header from "../components/Header";
 import { Task } from "../models/Task";
 import TaskCard from "@/components/TaskCard";
-import { useState } from "react";
+// import { useState } from "react";
 
 export default function Home() {
   const tasks: Task[] = [
@@ -31,8 +31,9 @@ export default function Home() {
       <Header />
       <p>Your personal assistant.</p>
 
-      <TaskCard task={tasks[0]} />
-      <TaskCard task={tasks[1]} />
+      {tasks.map((task) => (
+      <TaskCard key={task.id} task={task} />
+      ))}
     </main>
   );
 }
