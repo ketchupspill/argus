@@ -2,10 +2,10 @@ import Image from "next/image";
 import Header from "../components/Header";
 import { Task } from "../models/Task";
 import TaskCard from "@/components/TaskCard";
-// import { useState } from "react";
+import { useState } from "react";
 
 export default function Home() {
-  const tasks: Task[] = [
+  const [tasks, setTasks] = useState<Task[]>([
     {
         id: "1",
         title: "Finish Luma MVP",
@@ -24,7 +24,7 @@ export default function Home() {
         createdAt: new Date(),
         updatedAt: new Date(),
     }
-  ]
+  ]);
 
   return (
     <main>
