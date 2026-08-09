@@ -33,6 +33,7 @@ export default function Home() {
 
       {tasks.map((task) => (
       <TaskCard key={task.id} task={task} />
+      // a change. going to implement a more nuanced way of representing tasks
       ))}
     </main>
   );
