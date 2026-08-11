@@ -35,6 +35,7 @@ export default function Home() {
       <TaskCard key={task.id} task={task} />
       // a change. going to implement a more nuanced way of representing tasks
       //possibly use a different map?
+      // will decide and implement today!
       ))}
     </main>
   );
