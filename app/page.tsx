@@ -36,6 +36,7 @@ export default function Home() {
       // a change. going to implement a more nuanced way of representing tasks
       //possibly use a different map?
       // will decide and implement today!
+      // still need to implement a way to add tasks, and a way to edit them. will do that next.
       ))}
     </main>
   );
