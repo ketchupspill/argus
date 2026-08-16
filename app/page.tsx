@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Header from "../components/Header";
 import { Task } from "../models/Task";
@@ -26,11 +27,25 @@ export default function Home() {
     }
   ]);
 
+  function addTask() {
+    const newTask: Task = {
+        id: crypto.randomUUID(),
+        title: "New Task",
+        description: "Test task",
+        priority: 3,
+        status: "to_do",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    };
+
+    setTasks([...tasks, newTask]);
+}
+
   return (
     <main>
       <Header />
       <p>Your personal assistant.</p>
-
+      <button onClick={(addTask)}>Add Task</button>
       {tasks.map((task) => (
       <TaskCard key={task.id} task={task} />
       // a change. going to implement a more nuanced way of representing tasks
