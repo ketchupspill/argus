@@ -4,8 +4,11 @@ import Header from "../components/Header";
 import { Task } from "../models/Task";
 import TaskCard from "@/components/TaskCard";
 import { useState } from "react";
+import TaskModal from "@/components/TaskModal";
 
 export default function Home() {
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+
   const [tasks, setTasks] = useState<Task[]>([
     {
         id: "1",
@@ -45,7 +48,14 @@ export default function Home() {
     <main>
       <Header />
       <p>Your personal assistant.</p>
-      <button onClick={(addTask)}>Add Task</button>
+      {/* <button onClick={(addTask)}>Add Task</button> */}
+      <button onClick={() => setIsTaskModalOpen(true)}>
+        + Add Task
+      </button>
+      <TaskModal
+        isOpen={isTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
+      />
       {tasks.map((task) => (
       <TaskCard key={task.id} task={task} />
       // a change. going to implement a more nuanced way of representing tasks
