@@ -1,0 +1,6 @@
+Milestone 1: Completed v1 task creation workflow
+
+Implemented a reusable task creation modal supporting titles, descriptions, priorities, and optional due dates. 
+Added client-side validation, form state management, dynamic task creation, and automatic form reset after submission/cancellation.
+
+August 16th, 2026
