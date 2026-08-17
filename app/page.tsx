@@ -30,11 +30,11 @@ export default function Home() {
     }
   ]);
 
-  function addTask() {
+  function addTask(title: string, description: string) {
     const newTask: Task = {
         id: crypto.randomUUID(),
-        title: "New Task",
-        description: "Test task",
+        title,
+        description,
         priority: 3,
         status: "to_do",
         createdAt: new Date(),
@@ -55,6 +55,7 @@ export default function Home() {
       <TaskModal
         isOpen={isTaskModalOpen}
         onClose={() => setIsTaskModalOpen(false)}
+        onAddTask={addTask}
       />
       {tasks.map((task) => (
       <TaskCard key={task.id} task={task} />

@@ -3,9 +3,10 @@ import { useState } from "react";
 interface TaskModalProps {
     isOpen: boolean; //open or not
     onClose: () => void;
+    onAddTask: (title: string, description: string) => void;
 }
 
-export default function TaskModal({ isOpen, onClose }: TaskModalProps) {
+export default function TaskModal({ isOpen, onClose, onAddTask }: TaskModalProps) {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -39,7 +40,7 @@ export default function TaskModal({ isOpen, onClose }: TaskModalProps) {
                   onChange = {(e) => setDescription(e.target.value)}
                 />
 
-                <button>
+                <button onClick={() => onAddTask(title, description)}>
                     Add Task
                 </button>
 
