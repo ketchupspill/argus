@@ -30,13 +30,17 @@ export default function Home() {
     }
   ]);
 
-  function addTask(title: string, description: string) {
+  function addTask(title: string,
+                   description: string, 
+                   priority: 1 | 2 | 3, 
+                   dueDate: string  ) {
     const newTask: Task = {
         id: crypto.randomUUID(),
         title,
         description,
-        priority: 3,
+        priority,
         status: "to_do",
+        dueDate: dueDate ? new Date(dueDate) : undefined,
         createdAt: new Date(),
         updatedAt: new Date(),
     };

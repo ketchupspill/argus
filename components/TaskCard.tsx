@@ -15,6 +15,10 @@ export default function TaskCard(props: TaskCardProps) {
             <p>Priority: {props.task.priority}</p>
 
             <p>Status: {props.task.status}</p>
+
+            {props.task.dueDate && (
+                <p>Due: {props.task.dueDate.toLocaleDateString()}</p>
+            )}
         </div>
     );
 }
