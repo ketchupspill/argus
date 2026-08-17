@@ -1,9 +1,15 @@
+import { useState } from "react";
+
 interface TaskModalProps {
     isOpen: boolean; //open or not
     onClose: () => void;
 }
 
 export default function TaskModal({ isOpen, onClose }: TaskModalProps) {
+
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+
     if (!isOpen) {
         return null;
     }
@@ -17,7 +23,25 @@ export default function TaskModal({ isOpen, onClose }: TaskModalProps) {
                     X
                 </button>
 
-                <p>Enter Task details.</p>
+                
+                <label> Title </label>
+
+                <input 
+                  type = "text"
+                  value = {title}
+                  onChange = {(e) => setTitle(e.target.value)}
+                />
+
+                <label> Description </label>
+
+                <textarea
+                  value = {description}
+                  onChange = {(e) => setDescription(e.target.value)}
+                />
+
+                <button>
+                    Add Task
+                </button>
 
                 <button onClick={onClose}>
                     Cancel
@@ -25,4 +49,6 @@ export default function TaskModal({ isOpen, onClose }: TaskModalProps) {
             </div>
         </div>
     );
+
+   
 }
