@@ -1,5 +1,5 @@
 import { Task } from "@/models/Task";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface TaskModalProps {
     isOpen: boolean; //open or not
@@ -9,23 +9,36 @@ interface TaskModalProps {
                 priority: 1 | 2 | 3,
                 dueDate: string
             ) => void;
+
+    onUpdateTask: (updatedTask: Task) => void;
+    
     taskToEdit: Task | null;
 }
 
-export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit}: TaskModalProps) {
+export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUpdateTask }: TaskModalProps) {
 
     const [title, setTitle] = useState("");
     const [titleError, setTitleError] = useState("");
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState<1 | 2 | 3>(3);
     const [dueDate, setDueDate] = useState("");
+    const isEditing = taskToEdit !== null;
     
+    useEffect(() => {
+        if (!taskToEdit) {
+            return;
+        }
+
+        setTitle(taskToEdit.title);
+        setDescription(taskToEdit.description ?? "");
+        setPriority(taskToEdit.priority);
+    }, [taskToEdit]);
 
     if (!isOpen) {
         return null;
     }
 
-    function handleAddTask() {
+    function handleSave() {
         if (title.trim() === "") {
             setTitleError("Title is required.");
             return;
@@ -33,10 +46,22 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit}: Tas
 
         setTitleError("");
 
-        onAddTask(title, description, priority, dueDate);
+        if (isEditing && taskToEdit) {
+            const updatedTask: Task = {
+                ...taskToEdit,
+                title,
+                description,
+                priority,
+                dueDate: dueDate ? new Date(dueDate) : undefined,
+                updatedAt: new Date(),
+            };
+
+            onUpdateTask(updatedTask);
+        } else {
+            onAddTask(title, description, priority, dueDate);
+        }
 
         resetForm();
-        onClose();
     }
 
     function resetForm() {
@@ -51,7 +76,7 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit}: Tas
     return (
         <div>
             <div>
-                <h2>Add Task</h2>
+                <h2>{isEditing ? "Edit Task" : "Add Task"}</h2>
 
                 <label>Title</label>
 
@@ -92,8 +117,8 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit}: Tas
                     onChange={(e) => setDueDate(e.target.value)}
                 />
 
-                <button onClick={() => handleAddTask()}>
-                    Add Task
+                <button onClick={() => handleSave()}>
+                    {isEditing ? "Save Changes" : "Add Task"}
                 </button>
 
                 <button onClick={resetForm}>

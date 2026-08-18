@@ -46,6 +46,16 @@ export default function Home() {
     };
 
     setTasks([...tasks, newTask]);
+  }
+
+  function updateTask(updatedTask: Task) {
+    setTasks(
+        tasks.map((task) =>
+            task.id === updatedTask.id
+                ? updatedTask
+                : task
+        )
+    );
 }
 
 
@@ -53,13 +63,15 @@ export default function Home() {
     <main>
       <Header />
       <p>Your personal assistant.</p>
-      <button onClick={() => setIsTaskModalOpen(true)}>
+      <button onClick={() => {setIsTaskModalOpen(true);
+                              setTaskToEdit(null);}}>
         + Add Task
       </button>
       <TaskModal
         isOpen={isTaskModalOpen}
         onClose={() => setIsTaskModalOpen(false)}
         onAddTask={addTask}
+        onUpdateTask={updateTask}
         taskToEdit={taskToEdit}
       />
       {tasks.map((task) => (
@@ -72,9 +84,6 @@ export default function Home() {
       
       ))}
 
-      <p>
-          Editing: {taskToEdit?.title ?? "None"}
-      </p>
     </main>
   );
 }
