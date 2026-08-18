@@ -60,6 +60,7 @@ export default function Home() {
         isOpen={isTaskModalOpen}
         onClose={() => setIsTaskModalOpen(false)}
         onAddTask={addTask}
+        taskToEdit={taskToEdit}
       />
       {tasks.map((task) => (
       <TaskCard key={task.id} 

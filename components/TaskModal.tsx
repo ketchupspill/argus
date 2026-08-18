@@ -1,3 +1,4 @@
+import { Task } from "@/models/Task";
 import { useState } from "react";
 
 interface TaskModalProps {
@@ -8,9 +9,10 @@ interface TaskModalProps {
                 priority: 1 | 2 | 3,
                 dueDate: string
             ) => void;
+    taskToEdit: Task | null;
 }
 
-export default function TaskModal({ isOpen, onClose, onAddTask }: TaskModalProps) {
+export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit}: TaskModalProps) {
 
     const [title, setTitle] = useState("");
     const [titleError, setTitleError] = useState("");
