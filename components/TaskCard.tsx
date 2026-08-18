@@ -3,6 +3,7 @@ import { Task } from "../models/Task";
 
 interface TaskCardProps {
     task: Task;
+    onEdit: (task: Task) => void;
 }
 
 export default function TaskCard(props: TaskCardProps) {
@@ -19,6 +20,10 @@ export default function TaskCard(props: TaskCardProps) {
             {props.task.dueDate && (
                 <p>Due: {props.task.dueDate.toLocaleDateString()}</p>
             )}
+
+            <button onClick={() => props.onEdit(props.task)}>
+                Edit
+            </button>
         </div>
     );
 }

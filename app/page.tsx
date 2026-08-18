@@ -8,7 +8,7 @@ import TaskModal from "@/components/TaskModal";
 
 export default function Home() {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
-
+  const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
   const [tasks, setTasks] = useState<Task[]>([
     {
         id: "1",
@@ -48,11 +48,11 @@ export default function Home() {
     setTasks([...tasks, newTask]);
 }
 
+
   return (
     <main>
       <Header />
       <p>Your personal assistant.</p>
-      {/* <button onClick={(addTask)}>Add Task</button> */}
       <button onClick={() => setIsTaskModalOpen(true)}>
         + Add Task
       </button>
@@ -62,12 +62,18 @@ export default function Home() {
         onAddTask={addTask}
       />
       {tasks.map((task) => (
-      <TaskCard key={task.id} task={task} />
-      // a change. going to implement a more nuanced way of representing tasks
-      //possibly use a different map?
-      // will decide and implement today!
-      // still need to implement a way to add tasks, and a way to edit them. will do that next.
+      <TaskCard key={task.id} 
+                task={task} 
+                onEdit={(task) => {setTaskToEdit(task);
+                                  setIsTaskModalOpen(true);
+                }}
+      />
+      
       ))}
+
+      <p>
+          Editing: {taskToEdit?.title ?? "None"}
+      </p>
     </main>
   );
 }
