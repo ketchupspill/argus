@@ -56,8 +56,27 @@ export default function Home() {
                 : task
         )
     );
+  }
+
+  function completeTask(taskToComplete: Task) {
+    const updatedTask: Task = {
+        ...taskToComplete,
+        status: "completed",
+        updatedAt: new Date(),
+    };
+
+    updateTask(updatedTask);
 }
 
+  function deleteTask(taskId: string) {
+    setTasks(
+        tasks.filter((task) => task.id !== taskId)
+    );
+}
+
+const activeTasks = tasks.filter(
+    (task) => task.status !== "completed"
+);
 
   return (
     <main>
@@ -74,12 +93,14 @@ export default function Home() {
         onUpdateTask={updateTask}
         taskToEdit={taskToEdit}
       />
-      {tasks.map((task) => (
+      {activeTasks.map((task) => (
       <TaskCard key={task.id} 
                 task={task} 
                 onEdit={(task) => {setTaskToEdit(task);
                                   setIsTaskModalOpen(true);
                 }}
+                onComplete={completeTask}
+                onDelete={deleteTask}
       />
       
       ))}

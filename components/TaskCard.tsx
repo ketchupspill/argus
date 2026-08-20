@@ -4,6 +4,8 @@ import { Task } from "../models/Task";
 interface TaskCardProps {
     task: Task;
     onEdit: (task: Task) => void;
+    onComplete: (task: Task) => void;
+    onDelete: (taskID: string) => void;
 }
 
 export default function TaskCard(props: TaskCardProps) {
@@ -23,6 +25,14 @@ export default function TaskCard(props: TaskCardProps) {
 
             <button onClick={() => props.onEdit(props.task)}>
                 Edit
+            </button>
+
+            <button onClick={() => props.onComplete(props.task)}>
+                Complete 
+            </button>
+
+            <button onClick={() => props.onDelete(props.task.id)}>
+                Delete
             </button>
         </div>
     );
