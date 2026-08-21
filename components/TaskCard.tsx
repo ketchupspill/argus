@@ -23,6 +23,10 @@ export default function TaskCard(props: TaskCardProps) {
                 <p>Due: {props.task.dueDate.toLocaleDateString()}</p>
             )}
 
+            <p>Estimated Minutes: {props.task.estimatedMinutes ?? "N/A"}</p>
+
+            <p>Category: {props.task.category ?? "N/A"}</p>
+
             <button onClick={() => props.onEdit(props.task)}>
                 Edit
             </button>
