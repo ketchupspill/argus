@@ -8,6 +8,8 @@ export interface Task {
   priority: Priority;
   status: Status;
   dueDate?: Date;
+  estimatedMinutes?: number;
+  category?: string;
   createdAt: Date;
   updatedAt: Date;
 }

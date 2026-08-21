@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 interface TaskModalProps {
     isOpen: boolean; //open or not
     onClose: () => void;
-    onAddTask: (title: string, 
-                description: string, 
+    onAddTask: (title: string,
+                description: string,
                 priority: 1 | 2 | 3,
-                dueDate: string
+                dueDate: string,
+                estimatedMinutes: string,
+                category: string
             ) => void;
 
     onUpdateTask: (updatedTask: Task) => void;
@@ -23,6 +25,8 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
     const [priority, setPriority] = useState<1 | 2 | 3>(3);
     const [dueDate, setDueDate] = useState("");
     const isEditing = taskToEdit !== null;
+    const [estimatedMinutes, setEstimatedMinutes] = useState("");
+    const [category, setCategory] = useState("");
     
     useEffect(() => {
         if (!taskToEdit) {
@@ -32,7 +36,16 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
         setTitle(taskToEdit.title);
         setDescription(taskToEdit.description ?? "");
         setPriority(taskToEdit.priority);
-    }, [taskToEdit]);
+        setDueDate(
+            taskToEdit.dueDate
+                ? taskToEdit.dueDate.toISOString().split("T")[0]
+                : ""
+        );
+        setEstimatedMinutes(
+            taskToEdit.estimatedMinutes?.toString() ?? ""
+        );
+        setCategory(taskToEdit.category ?? "");
+        }, [taskToEdit]);
 
     if (!isOpen) {
         return null;
@@ -53,12 +66,22 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
                 description,
                 priority,
                 dueDate: dueDate ? new Date(dueDate) : undefined,
+                estimatedMinutes: estimatedMinutes
+                    ? Number(estimatedMinutes)
+                    : undefined,
+                category: category.trim() || undefined,
                 updatedAt: new Date(),
             };
 
             onUpdateTask(updatedTask);
         } else {
-            onAddTask(title, description, priority, dueDate);
+            onAddTask(title, 
+                      description, 
+                      priority, 
+                      dueDate, 
+                      estimatedMinutes, 
+                      category
+            );
         }
 
         resetForm();
@@ -69,6 +92,8 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
         setDescription("");
         setPriority(3);
         setDueDate("");
+        setEstimatedMinutes("");
+        setCategory("");
         setTitleError("");
         onClose();
     }
@@ -115,6 +140,23 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
                     type="date"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
+                />
+
+                <label>Estimated Time (minutes)</label>
+
+                <input
+                    type="number"
+                    min="1"
+                    value={estimatedMinutes}
+                    onChange={(e) => setEstimatedMinutes(e.target.value)}
+                />
+
+                <label>Category</label>
+
+                <input
+                    type="text"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
                 />
 
                 <button onClick={() => handleSave()}>

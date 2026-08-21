@@ -33,7 +33,9 @@ export default function Home() {
   function addTask(title: string,
                    description: string, 
                    priority: 1 | 2 | 3, 
-                   dueDate: string  ) {
+                   dueDate: string,
+                   estimatedMinutes: string,
+                   category: string) {
     const newTask: Task = {
         id: crypto.randomUUID(),
         title,
@@ -41,8 +43,10 @@ export default function Home() {
         priority,
         status: "to_do",
         dueDate: dueDate ? new Date(dueDate) : undefined,
+        estimatedMinutes: estimatedMinutes ? Number(estimatedMinutes) : undefined,
+        category: category.trim() || undefined,
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
     };
 
     setTasks([...tasks, newTask]);
