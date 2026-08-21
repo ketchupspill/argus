@@ -8,6 +8,7 @@ interface TaskModalProps {
                 description: string,
                 priority: 1 | 2 | 3,
                 dueDate: string,
+                status: "to_do" | "in_progress" | "completed",
                 estimatedMinutes: string,
                 category: string
             ) => void;
@@ -24,6 +25,7 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState<1 | 2 | 3>(3);
     const [dueDate, setDueDate] = useState("");
+    const [status, setStatus] = useState<"to_do" | "in_progress" | "completed">("to_do");
     const isEditing = taskToEdit !== null;
     const [estimatedMinutes, setEstimatedMinutes] = useState("");
     const [category, setCategory] = useState("");
@@ -36,6 +38,7 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
         setTitle(taskToEdit.title);
         setDescription(taskToEdit.description ?? "");
         setPriority(taskToEdit.priority);
+        setStatus(taskToEdit.status);
         setDueDate(
             taskToEdit.dueDate
                 ? taskToEdit.dueDate.toISOString().split("T")[0]
@@ -66,6 +69,7 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
                 description,
                 priority,
                 dueDate: dueDate ? new Date(dueDate) : undefined,
+                status,
                 estimatedMinutes: estimatedMinutes
                     ? Number(estimatedMinutes)
                     : undefined,
@@ -79,6 +83,7 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
                       description, 
                       priority, 
                       dueDate, 
+                      status,
                       estimatedMinutes, 
                       category
             );
@@ -91,6 +96,7 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
         setTitle("");
         setDescription("");
         setPriority(3);
+        setStatus("to_do");
         setDueDate("");
         setEstimatedMinutes("");
         setCategory("");
@@ -132,6 +138,21 @@ export default function TaskModal({ isOpen, onClose, onAddTask, taskToEdit, onUp
                     <option value={1}>1 - High</option>
                     <option value={2}>2 - Medium</option>
                     <option value={3}>3 - Low</option>
+                </select>
+                
+                <label>Status</label>
+
+                <select
+                    value={status}
+                    onChange={(e) =>
+                        setStatus(
+                            e.target.value as "to_do" | "in_progress" | "completed"
+                        )
+                    }
+                >
+                    <option value="to_do">To Do</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
                 </select>
 
                 <label>Due Date</label>

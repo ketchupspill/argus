@@ -34,6 +34,7 @@ export default function Home() {
                    description: string, 
                    priority: 1 | 2 | 3, 
                    dueDate: string,
+                   status: "to_do" | "in_progress" | "completed",
                    estimatedMinutes: string,
                    category: string) {
     const newTask: Task = {
@@ -62,7 +63,7 @@ export default function Home() {
     );
   }
 
-  function completeTask(taskToComplete: Task) {
+ function completeTask(taskToComplete: Task) {
     const updatedTask: Task = {
         ...taskToComplete,
         status: "completed",
@@ -70,13 +71,13 @@ export default function Home() {
     };
 
     updateTask(updatedTask);
-}
+  }
 
   function deleteTask(taskId: string) {
     setTasks(
         tasks.filter((task) => task.id !== taskId)
     );
-}
+  }
 
 const activeTasks = tasks.filter(
     (task) => task.status !== "completed"
